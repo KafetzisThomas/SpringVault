@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <!-- footer start -->
+    <div th:fragment="footer(extraClass)">
+        <footer class="footer text-dark py-3" th:classappend="${extraClass}">
+            <div class="container">
+                <hr class="border-dark mb-1">
+                <div class="row text-center mt-3">
+                    <p class="mb-1">&copy; 2025 KafetzisThomas</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- footer end -->
+</body>
+
+</html>
