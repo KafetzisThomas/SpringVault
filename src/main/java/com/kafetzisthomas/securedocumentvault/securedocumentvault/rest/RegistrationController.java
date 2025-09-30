@@ -27,7 +27,7 @@ public class RegistrationController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("form", new RegistrationForm());
-        return "register";
+        return "users/register";
     }
 
     @PostMapping("/register")
@@ -38,17 +38,17 @@ public class RegistrationController {
         if (form.getUsername() == null || form.getUsername().isBlank()
                 || form.getPassword() == null || form.getPassword().isBlank()) {
             model.addAttribute("error", "Username and password are required.");
-            return "register";
+            return "users/register";
         }
 
         if (!form.getPassword().equals(form.getConfirmPassword())) {
             model.addAttribute("error", "Passwords do not match.");
-            return "register";
+            return "users/register";
         }
 
         if (userRepository.findByUsername(form.getUsername()).isPresent()) {
             model.addAttribute("error", "User already exists.");
-            return "register";
+            return "users/register";
         }
 
         AppUser user = new AppUser();
@@ -63,4 +63,5 @@ public class RegistrationController {
         redirectAttributes.addFlashAttribute("registered", true);
         return "redirect:/login";
     }
+
 }
