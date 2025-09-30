@@ -1,9 +1,10 @@
 package com.kafetzisthomas.securedocumentvault.securedocumentvault.rest;
 
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.UserRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dto.RegistrationForm;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.AppUser;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.UUID;
-
 @Controller
 public class RegistrationController {
-    private final UserRepository userRepository;
+
+    private final UserDetailsManager userDetailsManager;
     private final PasswordEncoder passwordEncoder;
 
-    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public RegistrationController(UserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
+        this.userDetailsManager = userDetailsManager;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -46,19 +45,18 @@ public class RegistrationController {
             return "users/register";
         }
 
-        if (userRepository.findByUsername(form.getUsername()).isPresent()) {
+        if (userDetailsManager.userExists(form.getUsername())) {
             model.addAttribute("error", "User already exists.");
             return "users/register";
         }
 
-        AppUser user = new AppUser();
-        user.setId(UUID.randomUUID());
-        user.setUsername(form.getUsername());
-        user.setPassword(passwordEncoder.encode(form.getPassword()));
-        user.setEnabled(true);
-        user.setRoles(List.of("ROLE_USER"));
+        UserDetails user = User.withUsername(form.getUsername())
+                .passwordEncoder(passwordEncoder::encode)
+                .password(form.getPassword())
+                .roles("USER")
+                .build();
 
-        userRepository.save(user);
+        userDetailsManager.createUser(user);
 
         redirectAttributes.addFlashAttribute("registered", true);
         return "redirect:/login";
