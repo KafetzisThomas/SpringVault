@@ -59,6 +59,18 @@ public class DocumentController {
         return "redirect:/";
     }
 
+    @GetMapping("/document/view")
+    public ResponseEntity<ByteArrayResource> viewDocument(@RequestParam("id") UUID id, Principal principal) {
+        Document document = documentService.getDocumentById(id, principal.getName());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(document.getContentType()))
+                .header(
+                        "Content-Disposition",
+                        "inline; filename=\"" + document.getFilename() + "\"")
+                .body(new ByteArrayResource(document.getData()));
+    }
+
     @GetMapping("/document/download")
     public ResponseEntity<ByteArrayResource> downloadDocument(@RequestParam("id") UUID id, Principal principal) {
         Document document = documentService.getDocumentById(id, principal.getName());
