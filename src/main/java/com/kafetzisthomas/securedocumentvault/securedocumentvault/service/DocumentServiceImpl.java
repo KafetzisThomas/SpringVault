@@ -34,7 +34,7 @@ public class DocumentServiceImpl implements DocumentService{
         Document document = documentRepository.findByIdAndOwnerUsername(id, username)
                 .orElseThrow(() -> new IllegalArgumentException("Document not found"));
 
-        byte[] data = document.getData();  // Access the lob inside the method to initialize it
+        document.getData();// Access the lob inside the method to initialize it
 
         return document;
     }
