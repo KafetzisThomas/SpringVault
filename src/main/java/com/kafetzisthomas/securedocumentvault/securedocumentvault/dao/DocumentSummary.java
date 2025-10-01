@@ -1,10 +1,11 @@
 package com.kafetzisthomas.securedocumentvault.securedocumentvault.dao;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.UUID;
 
 public interface DocumentSummary {
-    Long getId();
+    UUID getId();
     String getFilename();
     String getContentType();
-    LocalDateTime getUploadedAt();
+    Instant getUploadedAt();
 }

@@ -31,6 +31,7 @@
                     <th>FILENAME</th>
                     <th>CONTENT TYPE</th>
                     <th>UPLOADED AT</th>
+                    <th>DOWNLOAD</th>
                 </tr>
             </thead>
 
@@ -38,7 +39,12 @@
                 <tr th:each="document : ${documents}">
                     <td class="text-center" th:text="${document.filename}" />
                     <td class="text-center" th:text="${document.contentType}" />
-                    <td class="text-center" th:text="${#temporals.format(document.uploadedAt, 'MMM. d, yyyy, h:mm a')}" />
+                    <td class="text-center" th:text="${#temporals.format(document.uploadedAt.atZone(T(java.time.ZoneId).systemDefault()), 'MMM. d, yyyy, h:mm a')}" />
+                    <td class="text-center">
+                        <a th:href="@{/document/download(id=${document.id})}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-download"></i> Download
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

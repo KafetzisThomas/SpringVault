@@ -3,8 +3,8 @@ package com.kafetzisthomas.securedocumentvault.securedocumentvault.service;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,8 +28,19 @@ public class DocumentServiceImpl implements DocumentService{
         return documentRepository.findAllByOwnerUsername(username);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public void addDocument(MultipartFile file) throws IOException {
+    public Document getDocumentById(UUID id, String username) {
+        Document document = documentRepository.findByIdAndOwnerUsername(id, username)
+                .orElseThrow(() -> new IllegalArgumentException("Document not found"));
+
+        byte[] data = document.getData();  // Access the lob inside the method to initialize it
+
+        return document;
+    }
+
+    @Override
+    public void addDocument(MultipartFile file, String username) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("File must not be empty");
         }
@@ -43,9 +54,7 @@ public class DocumentServiceImpl implements DocumentService{
         entity.setContentType(file.getContentType());
         entity.setData(file.getBytes());
         entity.setUploadedAt(Instant.now());
-
-        // set owner username (current authenticated user)
-        entity.setOwnerUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        entity.setOwnerUsername(username);
 
         documentRepository.save(entity);
     }
