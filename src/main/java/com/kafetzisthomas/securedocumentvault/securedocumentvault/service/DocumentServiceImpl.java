@@ -1,13 +1,16 @@
 package com.kafetzisthomas.securedocumentvault.securedocumentvault.service;
 
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentRepository;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,6 +21,11 @@ public class DocumentServiceImpl implements DocumentService{
 
     public DocumentServiceImpl(DocumentRepository documentRepository) {
         this.documentRepository = documentRepository;
+    }
+
+    @Override
+    public List<DocumentSummary> getAllDocuments(String username) {
+        return documentRepository.findAllByOwnerUsername(username);
     }
 
     @Override
@@ -35,6 +43,9 @@ public class DocumentServiceImpl implements DocumentService{
         entity.setContentType(file.getContentType());
         entity.setData(file.getBytes());
         entity.setUploadedAt(Instant.now());
+
+        // set owner username (current authenticated user)
+        entity.setOwnerUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
         documentRepository.save(entity);
     }

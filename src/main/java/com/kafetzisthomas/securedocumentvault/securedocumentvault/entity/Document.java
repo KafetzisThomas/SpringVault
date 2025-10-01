@@ -28,16 +28,20 @@ public class Document {
     @Column(nullable = false)
     private Instant uploadedAt;
 
+    @Column(nullable = false)
+    private String ownerUsername;
+
     // define contractors
     public Document() {
 
     }
 
-    public Document(String filename, String contentType, byte[] data, Instant uploadedAt) {
+    public Document(String filename, String contentType, byte[] data, Instant uploadedAt, String ownerUsername) {
         this.filename = filename;
         this.contentType = contentType;
         this.data = data;
         this.uploadedAt = uploadedAt;
+        this.ownerUsername = ownerUsername;
     }
 
     // define getters/setters
@@ -82,6 +86,14 @@ public class Document {
         this.uploadedAt = uploadedAt;
     }
 
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
     // define toString() method
 
     @Override
@@ -92,6 +104,7 @@ public class Document {
                 ", contentType='" + contentType + '\'' +
                 ", data=" + Arrays.toString(data) +
                 ", uploadedAt=" + uploadedAt +
+                ", ownerUsername='" + ownerUsername + '\'' +
                 '}';
     }
 
