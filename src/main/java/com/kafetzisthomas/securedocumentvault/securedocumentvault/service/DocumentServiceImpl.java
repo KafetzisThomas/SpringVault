@@ -41,8 +41,29 @@ public class DocumentServiceImpl implements DocumentService{
 
     @Override
     public void addDocument(MultipartFile file, String username) throws IOException {
+
+        // some hard-coded validation: not empty, allowed MIME types, max size 256 MB
+
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("File must not be empty");
+        }
+
+        List<String> allowedTypes = List.of(
+                "application/pdf", "application/msword",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+                "application/vnd.oasis.opendocument.text",  // .odt
+                "text/plain", "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+                "text/csv", "application/vnd.ms-powerpoint",  // .ppt
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation" // .pptx
+        );
+        if (!allowedTypes.contains(file.getContentType())) {
+            throw new IllegalArgumentException("Unsupported file type: " + file.getContentType());
+        }
+
+        long maxSize = 256 * 1024 * 1024; // 256 MB, max size * 1kb * 1mb
+        if (file.getSize() > maxSize) {
+            throw new IllegalArgumentException("File too large");
         }
 
         // sanitize filename before storing
