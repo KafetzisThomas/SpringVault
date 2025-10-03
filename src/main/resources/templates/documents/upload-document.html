@@ -13,6 +13,12 @@
 <body class="container mt-4">
     <h1 class="mb-4">Upload Document</h1>
 
+    <div class="mb-3">
+        <a th:href="@{/}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Documents
+        </a>
+    </div>
+
     <form action="#" th:action="@{/document/add}" enctype="multipart/form-data" method="POST" class="mb-3">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
@@ -23,7 +29,7 @@
                    required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary w-100">Upload</button>
 
     </form>
 
