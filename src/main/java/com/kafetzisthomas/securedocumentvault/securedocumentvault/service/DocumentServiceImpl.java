@@ -3,9 +3,14 @@ package com.kafetzisthomas.securedocumentvault.securedocumentvault.service;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.security.AesGcmEncryptor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -18,9 +23,12 @@ import java.util.UUID;
 public class DocumentServiceImpl implements DocumentService{
 
     private final DocumentRepository documentRepository;
+    private final String encryptionSecret;
 
-    public DocumentServiceImpl(DocumentRepository documentRepository) {
+    public DocumentServiceImpl(DocumentRepository documentRepository,
+                               @Value("${document.encryption.secret}") String encryptionSecret) {
         this.documentRepository = documentRepository;
+        this.encryptionSecret = encryptionSecret;
     }
 
     @Override
@@ -34,8 +42,7 @@ public class DocumentServiceImpl implements DocumentService{
         Document document = documentRepository.findByIdAndOwnerUsername(id, username)
                 .orElseThrow(() -> new IllegalArgumentException("Document not found"));
 
-        document.getData();// Access the lob inside the method to initialize it
-
+        decryptData(document);
         return document;
     }
 
@@ -73,11 +80,28 @@ public class DocumentServiceImpl implements DocumentService{
         entity.setId(UUID.randomUUID());
         entity.setFilename(filename);
         entity.setContentType(file.getContentType());
-        entity.setData(file.getBytes());
         entity.setUploadedAt(Instant.now());
         entity.setOwnerUsername(username);
 
+        try {
+            entity.setData(AesGcmEncryptor.encrypt(file.getBytes(), encryptionSecret));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Encryption failed", e);
+        }
+
         documentRepository.save(entity);
+    }
+
+    // Decryption helper
+
+    private void decryptData (@NonNull Document document){
+        if (document.getData() != null && document.getData().length > 0) {
+            try {
+                document.setData(AesGcmEncryptor.decrypt(document.getData(), encryptionSecret));
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Decryption failed", e);
+            }
+        }
     }
 
 }
