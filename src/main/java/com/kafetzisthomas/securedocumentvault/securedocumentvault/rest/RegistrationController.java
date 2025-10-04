@@ -1,6 +1,9 @@
 package com.kafetzisthomas.securedocumentvault.securedocumentvault.rest;
 
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.EncryptionKeyRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dto.RegistrationForm;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.EncryptionKey;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.security.AesGcmEncryptor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +20,12 @@ public class RegistrationController {
 
     private final UserDetailsManager userDetailsManager;
     private final PasswordEncoder passwordEncoder;
+    private final EncryptionKeyRepository encryptionKeyRepository;
 
-    public RegistrationController(UserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder) {
+    public RegistrationController(UserDetailsManager userDetailsManager, PasswordEncoder passwordEncoder, EncryptionKeyRepository encryptionKeyRepository) {
         this.userDetailsManager = userDetailsManager;
         this.passwordEncoder = passwordEncoder;
+        this.encryptionKeyRepository = encryptionKeyRepository;
     }
 
     @GetMapping("/register")
@@ -57,6 +62,10 @@ public class RegistrationController {
                 .build();
 
         userDetailsManager.createUser(user);
+
+        String base64Key = AesGcmEncryptor.generateKey();
+        EncryptionKey encryptionKey = new EncryptionKey(form.getUsername(), base64Key);
+        encryptionKeyRepository.save(encryptionKey);
 
         redirectAttributes.addFlashAttribute("registered", true);
         return "redirect:/login";

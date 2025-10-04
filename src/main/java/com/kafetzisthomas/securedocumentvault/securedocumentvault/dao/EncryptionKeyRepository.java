@@ -1,0 +1,15 @@
+package com.kafetzisthomas.securedocumentvault.securedocumentvault.dao;
+
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.EncryptionKey;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+// Use following sql command to see if encryption works for file data formatted as OID:
+// SELECT id, filename, encode(lo_get(data, 0, 100), 'hex') as encrypted_preview FROM document
+
+public interface EncryptionKeyRepository extends JpaRepository<EncryptionKey, String> {
+
+    Optional<EncryptionKey> findByUsername(String username);
+
+}

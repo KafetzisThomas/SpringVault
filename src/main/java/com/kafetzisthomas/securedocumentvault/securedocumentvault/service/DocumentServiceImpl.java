@@ -2,9 +2,10 @@ package com.kafetzisthomas.securedocumentvault.securedocumentvault.service;
 
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.EncryptionKeyRepository;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
+import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.EncryptionKey;
 import com.kafetzisthomas.securedocumentvault.securedocumentvault.security.AesGcmEncryptor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,12 @@ import java.util.UUID;
 public class DocumentServiceImpl implements DocumentService{
 
     private final DocumentRepository documentRepository;
-    private final String encryptionSecret;
+    private final EncryptionKeyRepository encryptionKeyRepository;
 
     public DocumentServiceImpl(DocumentRepository documentRepository,
-                               @Value("${document.encryption.secret}") String encryptionSecret) {
+                               EncryptionKeyRepository encryptionKeyRepository) {
         this.documentRepository = documentRepository;
-        this.encryptionSecret = encryptionSecret;
+        this.encryptionKeyRepository = encryptionKeyRepository;
     }
 
     @Override
@@ -84,7 +85,8 @@ public class DocumentServiceImpl implements DocumentService{
         entity.setOwnerUsername(username);
 
         try {
-            entity.setData(AesGcmEncryptor.encrypt(file.getBytes(), encryptionSecret));
+            String key = getEncryptionKeyForUser(username);
+            entity.setData(AesGcmEncryptor.encrypt(file.getBytes(), key));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Encryption failed", e);
         }
@@ -92,12 +94,20 @@ public class DocumentServiceImpl implements DocumentService{
         documentRepository.save(entity);
     }
 
+    private String getEncryptionKeyForUser(String username) {
+        EncryptionKey encryptionKey = encryptionKeyRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Encryption key not found for user: " + username));
+        return encryptionKey.getEncryptedKey();
+    }
+
     // Decryption helper
 
-    private void decryptData (@NonNull Document document){
+    private void decryptData(@NonNull Document document){
         if (document.getData() != null && document.getData().length > 0) {
             try {
-                document.setData(AesGcmEncryptor.decrypt(document.getData(), encryptionSecret));
+                String key = getEncryptionKeyForUser(document.getOwnerUsername());
+                document.setData(AesGcmEncryptor.decrypt(document.getData(), key));
             } catch (Exception e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Decryption failed", e);
             }
