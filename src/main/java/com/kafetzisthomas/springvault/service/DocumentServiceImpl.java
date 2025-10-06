@@ -1,11 +1,11 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.service;
+package com.kafetzisthomas.springvault.service;
 
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentRepository;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.EncryptionKeyRepository;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.EncryptionKey;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.security.AesGcmEncryptor;
+import com.kafetzisthomas.springvault.dao.DocumentRepository;
+import com.kafetzisthomas.springvault.dao.DocumentSummary;
+import com.kafetzisthomas.springvault.dao.EncryptionKeyRepository;
+import com.kafetzisthomas.springvault.entity.Document;
+import com.kafetzisthomas.springvault.entity.EncryptionKey;
+import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;

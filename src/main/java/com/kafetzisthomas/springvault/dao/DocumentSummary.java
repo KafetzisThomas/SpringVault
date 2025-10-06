@@ -1,4 +1,4 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.dao;
+package com.kafetzisthomas.springvault.dao;
 
 import java.time.Instant;
 import java.util.UUID;

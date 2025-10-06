@@ -1,13 +1,13 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault;
+package com.kafetzisthomas.springvault;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SecureDocumentVaultApplication {
+public class SpringVaultApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SecureDocumentVaultApplication.class, args);
+        SpringApplication.run(SpringVaultApplication.class, args);
     }
 
 }

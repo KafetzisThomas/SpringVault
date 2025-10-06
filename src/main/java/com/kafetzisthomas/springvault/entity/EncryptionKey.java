@@ -1,4 +1,4 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.entity;
+package com.kafetzisthomas.springvault.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

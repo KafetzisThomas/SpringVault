@@ -1,8 +1,8 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.rest;
+package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.DocumentSummary;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.service.DocumentService;
+import com.kafetzisthomas.springvault.dao.DocumentSummary;
+import com.kafetzisthomas.springvault.entity.Document;
+import com.kafetzisthomas.springvault.service.DocumentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;

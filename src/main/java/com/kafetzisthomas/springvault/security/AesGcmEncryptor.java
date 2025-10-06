@@ -1,4 +1,4 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.security;
+package com.kafetzisthomas.springvault.security;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

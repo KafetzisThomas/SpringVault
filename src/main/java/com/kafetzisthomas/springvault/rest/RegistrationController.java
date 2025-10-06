@@ -1,9 +1,9 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.rest;
+package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dao.EncryptionKeyRepository;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.dto.RegistrationForm;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.EncryptionKey;
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.security.AesGcmEncryptor;
+import com.kafetzisthomas.springvault.dao.EncryptionKeyRepository;
+import com.kafetzisthomas.springvault.dto.RegistrationForm;
+import com.kafetzisthomas.springvault.entity.EncryptionKey;
+import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;

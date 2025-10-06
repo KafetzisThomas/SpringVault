@@ -1,10 +1,10 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault;
+package com.kafetzisthomas.springvault;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SecureDocumentVaultApplicationTests {
+class SpringVaultApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.dto;
+package com.kafetzisthomas.springvault.dto;
 
 public class RegistrationForm {
     private String username;

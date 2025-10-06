@@ -1,4 +1,4 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.security;
+package com.kafetzisthomas.springvault.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

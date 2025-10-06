@@ -1,6 +1,6 @@
-package com.kafetzisthomas.securedocumentvault.securedocumentvault.dao;
+package com.kafetzisthomas.springvault.dao;
 
-import com.kafetzisthomas.securedocumentvault.securedocumentvault.entity.Document;
+import com.kafetzisthomas.springvault.entity.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
