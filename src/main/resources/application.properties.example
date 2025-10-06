@@ -3,9 +3,9 @@ spring.main.banner-mode=off
 logging.level.root=warn
 logging.level.org.springframework.security=DEBUG
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/springvault
-spring.datasource.username=postgres
-spring.datasource.password=postgres
+spring.datasource.url=jdbc:postgresql://localhost:5432/YOUR_DB_NAME
+spring.datasource.username=YOUR_DB_USERNAME
+spring.datasource.password=YOUR_DB_PASSWORD
 
 # Hibernate DDL auto config
 # create: drop and recreate tables each time (not for production)
