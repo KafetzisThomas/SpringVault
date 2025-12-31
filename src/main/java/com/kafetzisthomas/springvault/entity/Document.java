@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "documents")
 public class Document {
@@ -14,20 +16,25 @@ public class Document {
     @Column(nullable = false, updatable = false)
     private UUID id;
 
+    @NotNull
     @Column(nullable = false)
     private String filename;
 
-    @Column
+    @NotNull
+    @Column(nullable = false)
     private String contentType;
 
+    @NotNull
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(nullable = false)
     private byte[] data;
 
+    @NotNull
     @Column(nullable = false)
     private Instant uploadedAt;
 
+    @NotNull
     @Column(nullable = false)
     private String ownerUsername;
 

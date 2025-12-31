@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,7 +46,7 @@ class DocumentControllerTest {
         when(documentService.getAllDocuments("testuser"))
                 .thenReturn(List.of(summary));
 
-        mockMvc.perform(get("/").principal(principal))
+        mockMvc.perform(get("/").principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("documents/document-report"))
                 .andExpect(model().attributeExists("documents", "request"));
@@ -56,7 +57,7 @@ class DocumentControllerTest {
         MockMultipartFile file = new MockMultipartFile(
                 "file", "test.txt", "text/plain", "data".getBytes());
 
-        mockMvc.perform(multipart("/document/add").file(file).principal(principal))
+        mockMvc.perform(multipart("/document/add").file(file).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(flash().attributeExists("successMessage"));
@@ -70,7 +71,7 @@ class DocumentControllerTest {
         MockMultipartFile file = new MockMultipartFile(
                 "file", "test.txt", "text/plain", "data".getBytes());
 
-        mockMvc.perform(multipart("/document/add").file(file).principal(principal))
+        mockMvc.perform(multipart("/document/add").file(file).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(flash().attributeExists("errorMessage"));
@@ -85,7 +86,7 @@ class DocumentControllerTest {
         doc.setData("testData".getBytes());
         when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
 
-        mockMvc.perform(get("/document/view").param("id", id.toString()).principal(principal))
+        mockMvc.perform(get("/document/view").param("id", id.toString()).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "inline; filename=\"test.txt\""))
                 .andExpect(content().contentType("text/plain"));
@@ -100,7 +101,7 @@ class DocumentControllerTest {
         doc.setData("testData".getBytes());
         when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
 
-        mockMvc.perform(get("/document/download").param("id", id.toString()).principal(principal))
+        mockMvc.perform(get("/document/download").param("id", id.toString()).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "attachment; filename=\"test.txt\""))
                 .andExpect(content().contentType("text/plain"));

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -46,8 +47,7 @@ public class DocumentController {
     }
 
     @PostMapping("/document/add")
-    public String addDocument(@RequestParam("file") MultipartFile file,
-                              Principal principal, RedirectAttributes redirectAttributes) {
+    public String addDocument(@RequestParam("file") MultipartFile file, Principal principal, RedirectAttributes redirectAttributes) {
         try {
             documentService.addDocument(file, principal.getName());
             redirectAttributes.addFlashAttribute(
@@ -64,11 +64,11 @@ public class DocumentController {
         Document document = documentService.getDocumentById(id, principal.getName());
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(document.getContentType()))
+                .contentType(MediaType.parseMediaType(Objects.requireNonNull(document.getContentType())))
                 .header(
                         "Content-Disposition",
                         "inline; filename=\"" + document.getFilename() + "\"")
-                .body(new ByteArrayResource(document.getData()));
+                .body(new ByteArrayResource(Objects.requireNonNull(document.getData())));
     }
 
     @GetMapping("/document/download")
@@ -76,11 +76,10 @@ public class DocumentController {
         Document document = documentService.getDocumentById(id, principal.getName());
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(document.getContentType()))
+                .contentType(MediaType.parseMediaType(Objects.requireNonNull(document.getContentType())))
                 .header(
                         "Content-Disposition",
                         "attachment; filename=\"" + document.getFilename() + "\"")
-                .body(new ByteArrayResource(document.getData()));
+                .body(new ByteArrayResource(Objects.requireNonNull(document.getData())));
     }
-
 }

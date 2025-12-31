@@ -26,8 +26,7 @@ public class DocumentServiceImpl implements DocumentService{
     private final DocumentRepository documentRepository;
     private final EncryptionKeyRepository encryptionKeyRepository;
 
-    public DocumentServiceImpl(DocumentRepository documentRepository,
-                               EncryptionKeyRepository encryptionKeyRepository) {
+    public DocumentServiceImpl(DocumentRepository documentRepository, EncryptionKeyRepository encryptionKeyRepository) {
         this.documentRepository = documentRepository;
         this.encryptionKeyRepository = encryptionKeyRepository;
     }
@@ -43,7 +42,7 @@ public class DocumentServiceImpl implements DocumentService{
         Document document = documentRepository.findByIdAndOwnerUsername(id, username)
                 .orElseThrow(() -> new IllegalArgumentException("Document not found"));
 
-        decryptData(document);
+        decryptData(Objects.requireNonNull(document, "Document must not be null"));
         return document;
     }
 
@@ -101,8 +100,7 @@ public class DocumentServiceImpl implements DocumentService{
         return encryptionKey.getEncryptedKey();
     }
 
-    // Decryption helper
-
+    // decryption helper
     private void decryptData(@NonNull Document document){
         if (document.getData() != null && document.getData().length > 0) {
             try {
