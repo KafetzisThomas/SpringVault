@@ -36,7 +36,7 @@ class DocumentControllerTest {
     private final Principal principal = () -> "testuser";
 
     @Test
-    void whenListDocuments_thenShowDocumentReport() throws Exception {
+    void whenListDocuments_thenShowDocumentDashboard() throws Exception {
         DocumentSummary summary = mock(DocumentSummary.class);
         when(summary.getId()).thenReturn(UUID.randomUUID());
         when(summary.getFilename()).thenReturn("test.txt");
@@ -48,7 +48,7 @@ class DocumentControllerTest {
 
         mockMvc.perform(get("/").principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("documents/document-report"))
+                .andExpect(view().name("documents/document-dashboard"))
                 .andExpect(model().attributeExists("documents", "request"));
     }
 

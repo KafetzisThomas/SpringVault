@@ -38,7 +38,7 @@ public class DocumentController {
         model.addAttribute("documents", documents);
         model.addAttribute("request", request);
 
-        return "documents/document-report";
+        return "documents/document-dashboard";
     }
 
     @GetMapping("/document/upload")

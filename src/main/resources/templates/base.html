@@ -1,7 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <body>
+    <!-- navbar start -->
+     <div th:fragment="navbar(activePage)">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}">SpringVault</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                th:classappend="${activePage == 'home'} ? ' active' : ''"
+                                th:href="@{/}">Documents</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/document/upload}" class="btn btn-success btn-sm"><i class="bi bi-cloud-arrow-up me-1"></i> Upload New</a>
+                        <form th:action="@{/logout}" method="POST">
+                            <button type="submit" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- navbar end -->
+
     <!-- footer start -->
     <div th:fragment="footer(extraClass)">
         <footer class="footer text-dark py-3" th:classappend="${extraClass}">
@@ -15,5 +45,4 @@
     </div>
     <!-- footer end -->
 </body>
-
 </html>

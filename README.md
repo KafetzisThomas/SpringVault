@@ -1,6 +1,6 @@
 <div align="center">
-    <h1>SpringVault</h1>
-    <p>Enables secure uploading and encrypted storage of documents.<br>Written in Java/Spring Boot</p>
+    <img src="src/main/resources/static/favicon.ico" width="100" alt="Logo Icon"/>
+    <p><strong>SpringVault:</strong> Enables secure uploading and encrypted storage of documents.<br>Written in Java/Spring Boot</p>
 </div>
 
 ## Features
