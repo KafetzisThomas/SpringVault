@@ -1,6 +1,6 @@
 <div align="center">
     <img src="src/main/resources/static/favicon.ico" width="100" alt="Logo Icon"/>
-    <p><strong>SpringVault:</strong> Enables secure uploading and encrypted storage of documents.<br>Written in Java/Spring Boot</p>
+    <p><strong>SpringVault: </strong>Securely upload your documents to your own vault.<br>Written in Java/Spring Boot</p>
 </div>
 
 ## Features
