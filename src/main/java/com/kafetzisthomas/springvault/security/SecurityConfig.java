@@ -17,36 +17,32 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+    UserDetailsManager userDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer -> configurer
                         .requestMatchers("/register", "/register/**").permitAll()
                         .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/authenticateTheUser")
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
-                .logout(LogoutConfigurer::permitAll)
-                .exceptionHandling(configurer -> configurer
-                        .accessDeniedPage("/showAccessDenied")
-                )
-                .httpBasic(Customizer.withDefaults());  // use HTTP Basic authentication
+            .formLogin(form -> form
+                    .loginPage("/login")
+                    .loginProcessingUrl("/authenticateTheUser")
+                    .defaultSuccessUrl("/", true)
+                    .permitAll()
+            )
+            .logout(LogoutConfigurer::permitAll)
+            .exceptionHandling(configurer -> configurer.accessDeniedPage("/showAccessDenied"))
+            .httpBasic(Customizer.withDefaults());  // use http Basic authentication
 
         return http.build();
     }
-
 }

@@ -8,7 +8,6 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 public class AesGcmEncryptor {
-
     private static final String ALGORITHM = "AES/GCM/NoPadding";
     private static final int TAG_LENGTH = 128;  // bits
     private static final int IV_LENGTH = 12;   // bytes
@@ -58,5 +57,4 @@ public class AesGcmEncryptor {
         SECURE_RANDOM.nextBytes(key);
         return Base64.getEncoder().encodeToString(key);
     }
-
 }

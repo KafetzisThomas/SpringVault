@@ -50,11 +50,9 @@ public class DocumentController {
     public String addDocument(@RequestParam("file") MultipartFile file, Principal principal, RedirectAttributes redirectAttributes) {
         try {
             documentService.addDocument(file, principal.getName());
-            redirectAttributes.addFlashAttribute(
-                    "successMessage", "Document uploaded successfully");
+            redirectAttributes.addFlashAttribute("successMessage", "Document uploaded successfully");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute(
-                    "errorMessage", "Upload failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Upload failed: " + e.getMessage());
         }
         return "redirect:/";
     }
@@ -65,9 +63,7 @@ public class DocumentController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(Objects.requireNonNull(document.getContentType())))
-                .header(
-                        "Content-Disposition",
-                        "inline; filename=\"" + document.getFilename() + "\"")
+                .header("Content-Disposition", "inline; filename=\"" + document.getFilename() + "\"")
                 .body(new ByteArrayResource(Objects.requireNonNull(document.getData())));
     }
 
@@ -77,9 +73,7 @@ public class DocumentController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(Objects.requireNonNull(document.getContentType())))
-                .header(
-                        "Content-Disposition",
-                        "attachment; filename=\"" + document.getFilename() + "\"")
+                .header("Content-Disposition", "attachment; filename=\"" + document.getFilename() + "\"")
                 .body(new ByteArrayResource(Objects.requireNonNull(document.getData())));
     }
 }

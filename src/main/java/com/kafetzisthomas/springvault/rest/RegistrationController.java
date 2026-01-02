@@ -35,12 +35,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String doRegister(@ModelAttribute("form") RegistrationForm form,
-                             Model model, RedirectAttributes redirectAttributes) {
+    public String doRegister(@ModelAttribute("form") RegistrationForm form, Model model, RedirectAttributes redirectAttributes) {
 
         // basic checks without heavy validation
-        if (form.getUsername() == null || form.getUsername().isBlank()
-                || form.getPassword() == null || form.getPassword().isBlank()) {
+        if (form.getUsername() == null || form.getUsername().isBlank() || form.getPassword() == null || form.getPassword().isBlank()) {
             model.addAttribute("error", "Username and password are required.");
             return "users/register";
         }
@@ -70,5 +68,4 @@ public class RegistrationController {
         redirectAttributes.addFlashAttribute("registered", true);
         return "redirect:/login";
     }
-
 }

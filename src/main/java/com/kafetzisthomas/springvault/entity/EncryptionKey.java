@@ -17,7 +17,7 @@ public class EncryptionKey {
     @Column(nullable = false, length = 256)
     private String encryptedKey;
 
-    // define contractors
+    // define contructors
     public EncryptionKey() {
 
     }
@@ -54,5 +54,4 @@ public class EncryptionKey {
                 ", encryptedKey='" + encryptedKey + '\'' +
                 '}';
     }
-
 }

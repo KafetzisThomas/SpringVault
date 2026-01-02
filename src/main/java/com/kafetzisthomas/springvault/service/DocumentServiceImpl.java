@@ -55,6 +55,11 @@ public class DocumentServiceImpl implements DocumentService{
             throw new IllegalArgumentException("File must not be empty");
         }
 
+        long maxSize = 256 * 1024 * 1024;  // 256 MB, max size * 1kb * 1mb
+        if (file.getSize() > maxSize) {
+            throw new IllegalArgumentException("File too large");
+        }
+
         List<String> allowedTypes = List.of(
                 "application/pdf", "application/msword",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
@@ -66,11 +71,6 @@ public class DocumentServiceImpl implements DocumentService{
         );
         if (!allowedTypes.contains(file.getContentType())) {
             throw new IllegalArgumentException("Unsupported file type: " + file.getContentType());
-        }
-
-        long maxSize = 256 * 1024 * 1024; // 256 MB, max size * 1kb * 1mb
-        if (file.getSize() > maxSize) {
-            throw new IllegalArgumentException("File too large");
         }
 
         // sanitize filename before storing
@@ -89,14 +89,12 @@ public class DocumentServiceImpl implements DocumentService{
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Encryption failed", e);
         }
-
         documentRepository.save(entity);
     }
 
     private String getEncryptionKeyForUser(String username) {
         EncryptionKey encryptionKey = encryptionKeyRepository.findByUsername(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Encryption key not found for user: " + username));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Encryption key not found for user: " + username));
         return encryptionKey.getEncryptedKey();
     }
 
@@ -111,5 +109,4 @@ public class DocumentServiceImpl implements DocumentService{
             }
         }
     }
-
 }

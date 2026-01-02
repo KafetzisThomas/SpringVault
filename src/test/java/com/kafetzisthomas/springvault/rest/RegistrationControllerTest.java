@@ -20,8 +20,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Objects;
-
 @WebMvcTest(RegistrationController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class RegistrationControllerTest {
@@ -39,6 +37,7 @@ class RegistrationControllerTest {
     private EncryptionKeyRepository encryptionKeyRepository;
 
     @Test
+    @SuppressWarnings("null")
     void whenValidRegistration_thenCreateUserAndRedirect() throws Exception {
         Mockito.when(userDetailsManager.userExists("testuser")).thenReturn(false);
         Mockito.when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
@@ -47,7 +46,7 @@ class RegistrationControllerTest {
             mock.when(AesGcmEncryptor::generateKey).thenReturn("key123");
 
             mockMvc.perform(post("/register")
-                            .with(Objects.requireNonNull(csrf()))
+                            .with(csrf())
                             .param("username", "testuser")
                             .param("password", "password123")
                             .param("confirmPassword", "password123"))
@@ -56,14 +55,15 @@ class RegistrationControllerTest {
                     .andExpect(flash().attribute("registered", true));
 
             verify(userDetailsManager).createUser(any(UserDetails.class));
-            verify(encryptionKeyRepository).save(Objects.requireNonNull(any()));
+            verify(encryptionKeyRepository).save(any());
         }
     }
 
     @Test
+    @SuppressWarnings("null")
     void whenUsernameOrPasswordMissing_thenReturnError() throws Exception {
         mockMvc.perform(post("/register")
-                        .with(Objects.requireNonNull(csrf()))
+                        .with(csrf())
                         .param("username", "")
                         .param("password", "")
                         .param("confirmPassword", ""))
@@ -75,9 +75,10 @@ class RegistrationControllerTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     void whenPasswordsDoNotMatch_thenReturnError() throws Exception {
         mockMvc.perform(post("/register")
-                        .with(Objects.requireNonNull(csrf()))
+                        .with(csrf())
                         .param("username", "testuser")
                         .param("password", "password123")
                         .param("confirmPassword", "password"))
@@ -89,11 +90,12 @@ class RegistrationControllerTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     void whenUserAlreadyExists_thenReturnError() throws Exception {
         when(userDetailsManager.userExists("testuser")).thenReturn(true);
 
         mockMvc.perform(post("/register")
-                        .with(Objects.requireNonNull(csrf()))
+                        .with(csrf())
                         .param("username", "testuser")
                         .param("password", "password123")
                         .param("confirmPassword", "password123"))
@@ -102,7 +104,6 @@ class RegistrationControllerTest {
                 .andExpect(model().attribute("error", "User already exists."));
 
         verify(userDetailsManager, never()).createUser(any());
-        verify(encryptionKeyRepository, never()).save(Objects.requireNonNull(any()));
+        verify(encryptionKeyRepository, never()).save(any());
     }
-
 }

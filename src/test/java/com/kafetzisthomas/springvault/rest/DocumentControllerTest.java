@@ -43,9 +43,7 @@ class DocumentControllerTest {
         when(summary.getContentType()).thenReturn("text/plain");
         when(summary.getUploadedAt()).thenReturn(java.time.Instant.now());
 
-        when(documentService.getAllDocuments("testuser"))
-                .thenReturn(List.of(summary));
-
+        when(documentService.getAllDocuments("testuser")).thenReturn(List.of(summary));
         mockMvc.perform(get("/").principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("documents/document-dashboard"))
@@ -54,23 +52,18 @@ class DocumentControllerTest {
 
     @Test
     void whenDocumentUploadSuccess_thenRedirectWithSuccessMessage() throws Exception {
-        MockMultipartFile file = new MockMultipartFile(
-                "file", "test.txt", "text/plain", "data".getBytes());
-
+        MockMultipartFile file = new MockMultipartFile("file", "test.txt", "text/plain", "data".getBytes());
         mockMvc.perform(multipart("/document/add").file(file).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(flash().attributeExists("successMessage"));
-
         verify(documentService).addDocument(any(), eq("testuser"));
     }
 
     @Test
     void whenDocumentUploadFails_thenRedirectWithErrorMessage() throws Exception {
         doThrow(new RuntimeException("fail")).when(documentService).addDocument(any(), any());
-        MockMultipartFile file = new MockMultipartFile(
-                "file", "test.txt", "text/plain", "data".getBytes());
-
+        MockMultipartFile file = new MockMultipartFile("file", "test.txt", "text/plain", "data".getBytes());
         mockMvc.perform(multipart("/document/add").file(file).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
@@ -84,8 +77,8 @@ class DocumentControllerTest {
         doc.setContentType("text/plain");
         doc.setFilename("test.txt");
         doc.setData("testData".getBytes());
-        when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
 
+        when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
         mockMvc.perform(get("/document/view").param("id", id.toString()).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "inline; filename=\"test.txt\""))
@@ -99,12 +92,11 @@ class DocumentControllerTest {
         doc.setContentType("text/plain");
         doc.setFilename("test.txt");
         doc.setData("testData".getBytes());
-        when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
 
+        when(documentService.getDocumentById(id, "testuser")).thenReturn(doc);
         mockMvc.perform(get("/document/download").param("id", id.toString()).principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Disposition", "attachment; filename=\"test.txt\""))
                 .andExpect(content().contentType("text/plain"));
     }
-
 }

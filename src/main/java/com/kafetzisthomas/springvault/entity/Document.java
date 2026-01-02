@@ -38,7 +38,7 @@ public class Document {
     @Column(nullable = false)
     private String ownerUsername;
 
-    // define contractors
+    // define contructors
     public Document() {
 
     }
@@ -114,5 +114,4 @@ public class Document {
                 ", ownerUsername='" + ownerUsername + '\'' +
                 '}';
     }
-
 }
