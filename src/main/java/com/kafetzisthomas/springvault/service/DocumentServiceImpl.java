@@ -92,6 +92,16 @@ public class DocumentServiceImpl implements DocumentService{
         documentRepository.save(entity);
     }
 
+    @Override
+    @Transactional
+    public void deleteDocument(UUID id, String username) {
+        long deleted = documentRepository.deleteByIdAndOwnerUsername(id, username);
+        if (deleted == 0) {
+            // either not found or not owned, treat as 404
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Document not found");
+        }
+    }
+
     private String getEncryptionKeyForUser(String username) {
         EncryptionKey encryptionKey = encryptionKeyRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Encryption key not found for user: " + username));

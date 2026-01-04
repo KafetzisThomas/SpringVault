@@ -31,7 +31,6 @@ public class DocumentController {
 
     @GetMapping("/")
     public String listDocuments(HttpServletRequest request, Model model, Principal principal) {
-
         // get the documents from db only for the current user
         List<DocumentSummary> documents = documentService.getAllDocuments(principal.getName());
 
@@ -53,6 +52,17 @@ public class DocumentController {
             redirectAttributes.addFlashAttribute("successMessage", "Document uploaded successfully");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Upload failed: " + e.getMessage());
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/document/delete")
+    public String deleteDocument(@RequestParam("id") UUID id, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            documentService.deleteDocument(id, principal.getName());
+            redirectAttributes.addFlashAttribute("successMessage", "Document deleted successfully");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Delete failed: " + e.getMessage());
         }
         return "redirect:/";
     }
