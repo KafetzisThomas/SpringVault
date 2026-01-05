@@ -1,13 +1,13 @@
 <div align="center">
-    <img src="src/main/resources/static/favicon.ico" width="100" alt="Logo Icon"/>
+    <img src="src/main/resources/static/favicon.ico" width="150" alt="logo icon"/>
     <p><strong>SpringVault: </strong>Securely upload your documents to your own vault.<br>Written in Java/Spring Boot</p>
 </div>
 
 ## Features
 
-- AES-256 GCM encryption for files
-- User-specific document access
-- Upload, view and download documents
+- **AES-256 GCM** encryption for file storage
+- Support for common formats: `PDF`, `DOCX`, `XLSX`, `TXT`, etc.
+- Upload, view, download and delete documents
 
 ## Tech Stack
 
@@ -15,7 +15,7 @@ Built with Java 25, Spring Boot, PostgreSQL, Thymeleaf and Bootstrap 5.
 
 ## Database Schema
 
-![Database Schema](src/main/resources/static/springvault_db_schema.png)
+![Database Schema](/assets/db_schema.png)
 
 ## Setup for Local Development
 
@@ -28,19 +28,13 @@ cd SpringVault
 
 ### Run the SQL script to create tables
 
-In pgAdmin 4, open and run the script from the `sql-scripts/` directory.
+In pgAdmin4 open and run the script from the `sql-scripts/` directory.
 
 https://youtu.be/3YnNkm3RDMI?si=Y15dKyQ0pJZdEEaD
 
-If you prefer the CLI, you can use the following commands:
+If you prefer the CLI you can use the following commands:
 
 https://youtu.be/GiT0Dm8l_Ts?t=120&si=alCUwpcfHsVGOsO8
-
-Learn more about pgAdmin 4:
-
-https://www.pgadmin.org/docs/pgadmin4/latest/index.html
-
-https://youtu.be/WFT5MaZN6g4?si=2EO9urCjijPlLeWi
 
 ### Rename and configure the application properties file
 
@@ -64,4 +58,8 @@ Access web application at http://127.0.0.1:8080 or http://localhost:8080.
 mvn test
 ```
 
-Note: Most of these steps can be skipped if you use a full-featured IDE like IntelliJ.
+## Demo Images
+
+![Documents List](/assets/documents_list.png)
+
+![Upload Form](/assets/upload_form.png)
