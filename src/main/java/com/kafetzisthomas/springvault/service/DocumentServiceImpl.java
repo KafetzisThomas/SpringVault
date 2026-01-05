@@ -33,7 +33,7 @@ public class DocumentServiceImpl implements DocumentService{
 
     @Override
     public List<DocumentSummary> getAllDocuments(String username) {
-        return documentRepository.findAllByOwnerUsername(username);
+        return documentRepository.findAllByOwnerUsernameOrderByUploadedAtDesc(username);
     }
 
     @Transactional(readOnly = true)

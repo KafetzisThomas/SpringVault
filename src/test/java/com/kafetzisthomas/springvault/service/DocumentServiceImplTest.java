@@ -47,12 +47,12 @@ class DocumentServiceImplTest {
     @Test
     void getAllDocuments_returnList() {
         List<DocumentSummary> mockList = List.of(mock(DocumentSummary.class));
-        when(documentRepository.findAllByOwnerUsername("testuser")).thenReturn(mockList);
+        when(documentRepository.findAllByOwnerUsernameOrderByUploadedAtDesc("testuser")).thenReturn(mockList);
 
         var result = documentService.getAllDocuments("testuser");
 
         assertEquals(1, result.size());
-        verify(documentRepository).findAllByOwnerUsername("testuser");
+        verify(documentRepository).findAllByOwnerUsernameOrderByUploadedAtDesc("testuser");
     }
 
     @Test
