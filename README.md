@@ -47,7 +47,7 @@ Edit `application.properties` to update any necessary values (database config).
 ### Run the application (Tomcat Server)
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 Access web application at http://127.0.0.1:8080 or http://localhost:8080.
