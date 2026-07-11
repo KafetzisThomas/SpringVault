@@ -1,7 +1,8 @@
 package com.kafetzisthomas.springvault.service;
 
-import com.kafetzisthomas.springvault.dao.DocumentSummary;
 import com.kafetzisthomas.springvault.entity.Document;
+import com.kafetzisthomas.springvault.repository.DocumentSummary;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

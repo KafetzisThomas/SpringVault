@@ -1,4 +1,4 @@
-package com.kafetzisthomas.springvault.dao;
+package com.kafetzisthomas.springvault.repository;
 
 import com.kafetzisthomas.springvault.entity.EncryptionKey;
 import org.springframework.data.jpa.repository.JpaRepository;

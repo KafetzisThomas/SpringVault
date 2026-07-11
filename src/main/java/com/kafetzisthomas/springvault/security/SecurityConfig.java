@@ -41,7 +41,7 @@ public class SecurityConfig {
             )
             .logout(LogoutConfigurer::permitAll)
             .exceptionHandling(configurer -> configurer.accessDeniedPage("/showAccessDenied"))
-            .httpBasic(Customizer.withDefaults());  // use http Basic authentication
+            .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }

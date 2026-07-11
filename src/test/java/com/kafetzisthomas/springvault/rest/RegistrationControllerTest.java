@@ -1,6 +1,6 @@
 package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.springvault.dao.EncryptionKeyRepository;
+import com.kafetzisthomas.springvault.repository.EncryptionKeyRepository;
 import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;

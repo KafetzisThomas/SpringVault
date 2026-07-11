@@ -1,8 +1,8 @@
 package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.springvault.dao.EncryptionKeyRepository;
 import com.kafetzisthomas.springvault.dto.RegistrationForm;
 import com.kafetzisthomas.springvault.entity.EncryptionKey;
+import com.kafetzisthomas.springvault.repository.EncryptionKeyRepository;
 import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

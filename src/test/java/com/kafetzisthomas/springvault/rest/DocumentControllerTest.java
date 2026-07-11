@@ -1,7 +1,7 @@
 package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.springvault.dao.DocumentSummary;
 import com.kafetzisthomas.springvault.entity.Document;
+import com.kafetzisthomas.springvault.repository.DocumentSummary;
 import com.kafetzisthomas.springvault.service.DocumentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ class DocumentControllerTest {
         when(documentService.getAllDocuments("testuser")).thenReturn(List.of(summary));
         mockMvc.perform(get("/").principal(Objects.requireNonNull(principal)))
                 .andExpect(status().isOk())
-                .andExpect(view().name("documents/document-dashboard"))
+                .andExpect(view().name("documents/dashboard"))
                 .andExpect(model().attributeExists("documents", "request"));
     }
 

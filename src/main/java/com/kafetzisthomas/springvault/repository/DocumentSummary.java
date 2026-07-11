@@ -1,4 +1,4 @@
-package com.kafetzisthomas.springvault.dao;
+package com.kafetzisthomas.springvault.repository;
 
 import java.time.Instant;
 import java.util.UUID;

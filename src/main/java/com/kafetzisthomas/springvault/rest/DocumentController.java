@@ -1,7 +1,7 @@
 package com.kafetzisthomas.springvault.rest;
 
-import com.kafetzisthomas.springvault.dao.DocumentSummary;
 import com.kafetzisthomas.springvault.entity.Document;
+import com.kafetzisthomas.springvault.repository.DocumentSummary;
 import com.kafetzisthomas.springvault.service.DocumentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.ByteArrayResource;
@@ -37,7 +37,7 @@ public class DocumentController {
         model.addAttribute("documents", documents);
         model.addAttribute("request", request);
 
-        return "documents/document-dashboard";
+        return "documents/dashboard";
     }
 
     @GetMapping("/document/upload")
