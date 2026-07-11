@@ -55,7 +55,7 @@ Access web application at http://127.0.0.1:8080 or http://localhost:8080.
 ## Run Tests
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 ## Demo Images
