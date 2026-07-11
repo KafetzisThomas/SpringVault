@@ -7,7 +7,7 @@ import com.kafetzisthomas.springvault.repository.DocumentSummary;
 import com.kafetzisthomas.springvault.repository.EncryptionKeyRepository;
 import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

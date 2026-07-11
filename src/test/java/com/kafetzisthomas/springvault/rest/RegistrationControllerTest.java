@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -37,7 +37,6 @@ class RegistrationControllerTest {
     private EncryptionKeyRepository encryptionKeyRepository;
 
     @Test
-    @SuppressWarnings("null")
     void whenValidRegistration_thenCreateUserAndRedirect() throws Exception {
         Mockito.when(userDetailsManager.userExists("testuser")).thenReturn(false);
         Mockito.when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
@@ -60,7 +59,6 @@ class RegistrationControllerTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     void whenUsernameOrPasswordMissing_thenReturnError() throws Exception {
         mockMvc.perform(post("/register")
                         .with(csrf())
@@ -75,7 +73,6 @@ class RegistrationControllerTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     void whenPasswordsDoNotMatch_thenReturnError() throws Exception {
         mockMvc.perform(post("/register")
                         .with(csrf())
@@ -90,7 +87,6 @@ class RegistrationControllerTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     void whenUserAlreadyExists_thenReturnError() throws Exception {
         when(userDetailsManager.userExists("testuser")).thenReturn(true);
 

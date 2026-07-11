@@ -78,7 +78,6 @@ class DocumentServiceImplTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     void addDocument_saveEncryptedFile() throws IOException {
         when(file.isEmpty()).thenReturn(false);
         when(file.getOriginalFilename()).thenReturn("test.txt");
