@@ -13,7 +13,8 @@ import jakarta.validation.constraints.NotNull;
 public class Document {
 
     @Id
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue
+    @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
     @NotNull
@@ -38,10 +39,8 @@ public class Document {
     @Column(nullable = false)
     private String ownerUsername;
 
-    // define contructors
-    public Document() {
-
-    }
+    // contructors
+    public Document() {}
 
     public Document(String filename, String contentType, byte[] data, Instant uploadedAt, String ownerUsername) {
         this.filename = filename;
@@ -51,7 +50,7 @@ public class Document {
         this.ownerUsername = ownerUsername;
     }
 
-    // define getters/setters
+    // getters/setters
 
     public UUID getId() {
         return id;
@@ -100,8 +99,6 @@ public class Document {
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
     }
-
-    // define toString() method
 
     @Override
     public String toString() {

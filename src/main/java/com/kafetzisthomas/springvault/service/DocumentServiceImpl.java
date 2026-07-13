@@ -48,14 +48,11 @@ public class DocumentServiceImpl implements DocumentService{
 
     @Override
     public void addDocument(MultipartFile file, String username) throws IOException {
-
-        // some hard-coded validation: not empty, allowed MIME types, max size 256 MB
-
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("File must not be empty");
         }
 
-        long maxSize = 256 * 1024 * 1024;  // 256 MB, max size * 1kb * 1mb
+        long maxSize = 256 * 1024 * 1024;
         if (file.getSize() > maxSize) {
             throw new IllegalArgumentException("File too large");
         }
@@ -69,6 +66,7 @@ public class DocumentServiceImpl implements DocumentService{
                 "text/csv", "application/vnd.ms-powerpoint",  // .ppt
                 "application/vnd.openxmlformats-officedocument.presentationml.presentation" // .pptx
         );
+
         if (!allowedTypes.contains(file.getContentType())) {
             throw new IllegalArgumentException("Unsupported file type: " + file.getContentType());
         }
@@ -77,7 +75,6 @@ public class DocumentServiceImpl implements DocumentService{
         String filename = Paths.get(Objects.requireNonNull(file.getOriginalFilename())).getFileName().toString();
 
         Document entity = new Document();
-        entity.setId(UUID.randomUUID());
         entity.setFilename(filename);
         entity.setContentType(file.getContentType());
         entity.setUploadedAt(Instant.now());
@@ -97,7 +94,7 @@ public class DocumentServiceImpl implements DocumentService{
     public void deleteDocument(UUID id, String username) {
         long deleted = documentRepository.deleteByIdAndOwnerUsername(id, username);
         if (deleted == 0) {
-            // either not found or not owned, treat as 404
+            // either not found or not owned treat as 404
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Document not found");
         }
     }
@@ -108,7 +105,6 @@ public class DocumentServiceImpl implements DocumentService{
         return encryptionKey.getEncryptedKey();
     }
 
-    // decryption helper
     private void decryptData(@NonNull Document document){
         if (document.getData() != null && document.getData().length > 0) {
             try {

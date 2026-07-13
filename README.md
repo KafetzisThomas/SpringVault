@@ -1,12 +1,12 @@
 <div align="center">
-    <img src="src/main/resources/static/favicon.ico" width="150" alt="logo icon"/>
+    <img src="src/main/resources/static/favicon.ico" width="150"/>
     <p><strong>SpringVault: </strong>Securely upload your documents to your own vault.<br>Written in Java/Spring Boot</p>
 </div>
 
 ## Features
 
 - **AES-256 GCM** encryption for file storage
-- Support for common formats: `PDF`, `DOCX`, `XLSX`, `TXT`, etc.
+- Support for common formats: `PDF`, `DOCX`, `XLSX`, `TXT`, etc
 - Upload, view, download and delete documents
 
 ## Tech Stack
@@ -17,37 +17,22 @@ Built with Java 25, Spring Boot, PostgreSQL, Thymeleaf and Bootstrap 5.
 
 ![Database Schema](/assets/db_schema.png)
 
-## Setup for Local Development
+## Usage
 
-### Clone the repository
+Start the PostgreSQL database:
 
 ```bash
-git clone https://github.com/KafetzisThomas/SpringVault.git
-cd SpringVault
+docker compose up -d
 ```
 
-### Run the SQL script to create tables
-
-In pgAdmin4 open and run the script from the `sql-scripts/` directory.
-
-https://youtu.be/3YnNkm3RDMI?si=Y15dKyQ0pJZdEEaD
-
-If you prefer the CLI you can use the following commands:
-
-https://youtu.be/GiT0Dm8l_Ts?t=120&si=alCUwpcfHsVGOsO8
-
-### Rename and configure the application properties file
+Run the Spring Boot application:
 
 ```bash
-cp src/main/resources/application.properties.example src/main/resources/application.properties
-```
-
-Edit `application.properties` to update any necessary values (database config).
-
-### Run the application (Tomcat Server)
-
-```bash
+# RECOMMENDED: PowerShell/Linux/Mac
 ./mvnw spring-boot:run
+
+# Windows CMD
+.\mvnw.cmd spring-boot:run
 ```
 
 Access web application at http://127.0.0.1:8080 or http://localhost:8080.

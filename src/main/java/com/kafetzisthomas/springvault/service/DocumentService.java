@@ -11,15 +11,11 @@ import java.util.UUID;
 
 public interface DocumentService {
 
-    // return documents only for the specified username
     List<DocumentSummary> getAllDocuments(String username);
 
-    // return a single document by id if owned by the specified username, otherwise throw 404
     Document getDocumentById(UUID id, String username);
 
-    // upload a document for the specified username
     void addDocument(MultipartFile file, String username) throws IOException;
 
-    // delete a specific document if owned by the specified username, otherwise throw 404
     void deleteDocument(UUID id, String username);
 }

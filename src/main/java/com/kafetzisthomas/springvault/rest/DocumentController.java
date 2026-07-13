@@ -31,7 +31,6 @@ public class DocumentController {
 
     @GetMapping("/")
     public String listDocuments(HttpServletRequest request, Model model, Principal principal) {
-        // get the documents from db only for the current user
         List<DocumentSummary> documents = documentService.getAllDocuments(principal.getName());
 
         model.addAttribute("documents", documents);

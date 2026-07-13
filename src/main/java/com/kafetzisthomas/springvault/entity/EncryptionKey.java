@@ -9,25 +9,21 @@ import jakarta.persistence.Table;
 @Table(name = "encryption_keys")
 public class EncryptionKey {
 
-    // define fields
-
     @Id
     private String username;
 
     @Column(nullable = false, length = 256)
     private String encryptedKey;
 
-    // define contructors
-    public EncryptionKey() {
-
-    }
+    // contructors
+    public EncryptionKey() {}
 
     public EncryptionKey(String username, String encryptedKey) {
         this.username = username;
         this.encryptedKey = encryptedKey;
     }
 
-    // define getters/setters
+    // getters/setters
 
     public String getUsername() {
         return username;
@@ -44,8 +40,6 @@ public class EncryptionKey {
     public void setEncryptedKey(String encryptedKey) {
         this.encryptedKey = encryptedKey;
     }
-
-    // define toString() method
 
     @Override
     public String toString() {
