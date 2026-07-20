@@ -68,4 +68,10 @@ public class User {
         authorities.add(authority);
         authority.setUser(this);
     }
+
+    @Override
+    public String toString() {
+        return "User [username=" + username + ", enabled=" + enabled + ", authorities=" + authorities + "]";
+    }
+
 }
