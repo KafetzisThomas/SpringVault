@@ -1,4 +1,4 @@
-package com.kafetzisthomas.springvault.rest;
+package com.kafetzisthomas.springvault.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

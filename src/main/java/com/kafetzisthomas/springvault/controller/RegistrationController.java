@@ -1,4 +1,4 @@
-package com.kafetzisthomas.springvault.rest;
+package com.kafetzisthomas.springvault.controller;
 
 import com.kafetzisthomas.springvault.dto.RegistrationForm;
 import com.kafetzisthomas.springvault.entity.EncryptionKey;

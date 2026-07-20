@@ -1,6 +1,7 @@
 package com.kafetzisthomas.springvault.dto;
 
 public class RegistrationForm {
+
     private String username;
     private String password;
     private String confirmPassword;
@@ -27,4 +28,5 @@ public class RegistrationForm {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
 }

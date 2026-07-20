@@ -1,4 +1,4 @@
-package com.kafetzisthomas.springvault.rest;
+package com.kafetzisthomas.springvault.controller;
 
 import com.kafetzisthomas.springvault.repository.EncryptionKeyRepository;
 import com.kafetzisthomas.springvault.security.AesGcmEncryptor;
