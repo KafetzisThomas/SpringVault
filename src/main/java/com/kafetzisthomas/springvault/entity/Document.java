@@ -3,7 +3,6 @@ package com.kafetzisthomas.springvault.entity;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
@@ -13,29 +12,29 @@ import jakarta.validation.constraints.NotNull;
 public class Document {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private UUID id;
 
-    @NotNull
+    @NotNull(message="is required")
     @Column(nullable = false)
     private String filename;
 
-    @NotNull
+    @NotNull(message="is required")
     @Column(nullable = false)
     private String contentType;
 
-    @NotNull
     @Lob
+    @NotNull(message="is required")
     @Basic(fetch = FetchType.LAZY)
     @Column(nullable = false)
     private byte[] data;
 
-    @NotNull
+    @NotNull(message="is required")
     @Column(nullable = false)
     private Instant uploadedAt;
 
-    @NotNull
+    @NotNull(message="is required")
     @Column(nullable = false)
     private String ownerUsername;
 
@@ -102,13 +101,8 @@ public class Document {
 
     @Override
     public String toString() {
-        return "Document{" +
-                "id=" + id +
-                ", filename='" + filename + '\'' +
-                ", contentType='" + contentType + '\'' +
-                ", data=" + Arrays.toString(data) +
-                ", uploadedAt=" + uploadedAt +
-                ", ownerUsername='" + ownerUsername + '\'' +
-                '}';
+        return "Document [id=" + id + ", filename=" + filename + ", contentType=" + contentType +
+                ", uploadedAt=" + uploadedAt + ", ownerUsername=" + ownerUsername + "]";
     }
+
 }
