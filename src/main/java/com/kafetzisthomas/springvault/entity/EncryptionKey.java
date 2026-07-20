@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "encryption_keys")
@@ -12,7 +13,8 @@ public class EncryptionKey {
     @Id
     private String username;
 
-    @Column(nullable = false, length = 256)
+    @NotNull(message="is required")
+    @Column(length = 256, nullable = false)
     private String encryptedKey;
 
     // contructors
@@ -43,9 +45,7 @@ public class EncryptionKey {
 
     @Override
     public String toString() {
-        return "EncryptionKey{" +
-                "username='" + username + '\'' +
-                ", encryptedKey='" + encryptedKey + '\'' +
-                '}';
+        return "EncryptionKey [username=" + username + ", encryptedKey=***]";
     }
+
 }
