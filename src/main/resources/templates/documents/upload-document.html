@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Upload Document</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
-</head>
+<head th:replace="~{base :: head('Upload Document')}"></head>
 
 <body class="bg-light d-flex flex-column min-vh-100">
-    <div th:replace="~{base :: navbar('upload')}"></div>
+    <div th:replace="~{base :: navbar}"></div>
 
     <div class="container flex-grow-1 d-flex align-items-center justify-content-center">
         <div class="row w-100 justify-content-center">
@@ -46,8 +38,8 @@
         </div>
     </div>
 
-    <div th:replace="~{base :: footer('mt-auto')}"></div>
+    <th:block th:replace="~{base :: footer}"></th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <th:block th:replace="~{base :: scripts}"></th:block>
 </body>
 </html>

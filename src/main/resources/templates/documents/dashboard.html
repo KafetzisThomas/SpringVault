@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Documents</title>
+<head th:replace="~{base :: head('My Documents')}"></head>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
-</head>
 <body class="bg-light">
-    <div th:replace="~{base :: navbar('home')}"></div>
+    <div th:replace="~{base :: navbar}"></div>
 
     <div class="container">        
         <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
@@ -85,8 +78,8 @@
         </div>
     </div>
 
-    <div th:replace="~{base :: footer('')}"></div>
+    <th:block th:replace="~{base :: footer}"></th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <th:block th:replace="~{base :: scripts}"></th:block>
 </body>
 </html>

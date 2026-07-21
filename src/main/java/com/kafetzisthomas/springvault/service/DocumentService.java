@@ -18,4 +18,5 @@ public interface DocumentService {
     void addDocument(MultipartFile file, String username) throws IOException;
 
     void deleteDocument(UUID id, String username);
+
 }

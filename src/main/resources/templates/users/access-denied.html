@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Access Denied</title>
+<head th:replace="~{base :: head('Access Denied')}"></head>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
-</head>
 <body>
     <div class="container mt-5 text-center">
         <h4>Access Denied 403</h4>
@@ -16,8 +10,8 @@
         <p><a th:href="@{/}">Return to home</a></p>
     </div>
 
-    <div th:replace="~{base :: footer('fixed-bottom')}"></div>
+    <th:block th:replace="~{base :: footer}"></th:block>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <th:block th:replace="~{base :: scripts}"></th:block>
 </body>
 </html>
